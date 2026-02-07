@@ -1,0 +1,18 @@
+# Default configuration for realtime IDS/IPS
+capture:
+  interface: ""
+  bpf_filter: "ip"
+  promiscuous: true
+  packet_limit: 0
+
+model:
+  path: "models/ids_model"
+  threshold: 0.6
+
+actions:
+  enable_blocking: false
+  block_command_template: "netsh advfirewall firewall add rule name=\"IDS Block {ip}\" dir=in action=block remoteip={ip}"
+
+logging:
+  path: "logs/ids.log"
+  level: "INFO"
