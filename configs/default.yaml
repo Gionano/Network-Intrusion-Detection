@@ -8,6 +8,7 @@ capture:
 model:
   path: "models/ids_model"
   threshold: 0.6
+  num_classes: 5
 
 actions:
   enable_blocking: false
@@ -16,3 +17,10 @@ actions:
 logging:
   path: "logs/ids.log"
   level: "INFO"
+
+dashboard:
+  enabled: true
+  port: 8080
+
+replay:
+  output_csv: ""
