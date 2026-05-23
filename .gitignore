@@ -6,3 +6,6 @@ __pycache__/
 models/
 logs/
 .DS_Store
+.pytest_cache/
+htmlcov/
+.coverage
