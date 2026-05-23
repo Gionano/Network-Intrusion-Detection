@@ -29,6 +29,7 @@ class CaptureConfig:
 class ModelConfig:
     path: str = "models/ids_model"
     threshold: float = 0.6
+    num_classes: int = 5
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any] | None) -> "ModelConfig":
@@ -36,6 +37,7 @@ class ModelConfig:
         return cls(
             path=str(data.get("path", "models/ids_model")),
             threshold=float(data.get("threshold", 0.6)),
+            num_classes=int(data.get("num_classes", 5)),
         )
 
 
@@ -79,11 +81,39 @@ class LoggingConfig:
 
 
 @dataclass
+class DashboardConfig:
+    enabled: bool = True
+    port: int = 8080
+
+    @classmethod
+    def from_dict(cls, data: Dict[str, Any] | None) -> "DashboardConfig":
+        data = data or {}
+        return cls(
+            enabled=bool(data.get("enabled", True)),
+            port=int(data.get("port", 8080)),
+        )
+
+
+@dataclass
+class ReplayConfig:
+    output_csv: str = ""
+
+    @classmethod
+    def from_dict(cls, data: Dict[str, Any] | None) -> "ReplayConfig":
+        data = data or {}
+        return cls(
+            output_csv=str(data.get("output_csv", "")),
+        )
+
+
+@dataclass
 class AppConfig:
     capture: CaptureConfig
     model: ModelConfig
     actions: ActionConfig
     logging: LoggingConfig
+    dashboard: DashboardConfig
+    replay: ReplayConfig
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any] | None) -> "AppConfig":
@@ -93,6 +123,8 @@ class AppConfig:
             model=ModelConfig.from_dict(data.get("model")),
             actions=ActionConfig.from_dict(data.get("actions")),
             logging=LoggingConfig.from_dict(data.get("logging")),
+            dashboard=DashboardConfig.from_dict(data.get("dashboard")),
+            replay=ReplayConfig.from_dict(data.get("replay")),
         )
 
 
