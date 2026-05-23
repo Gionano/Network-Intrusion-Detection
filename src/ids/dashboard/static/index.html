@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Real-time Network Intrusion Detection System monitoring dashboard">
+    <title>IDS Dashboard — Network Intrusion Detection</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <!-- ─── Header ─── -->
+    <header id="header">
+        <div class="header-left">
+            <div class="logo">
+                <span class="logo-icon">◈</span>
+                <h1>IDS<span class="accent">Monitor</span></h1>
+            </div>
+            <div class="status-badge" id="status-badge">
+                <span class="status-dot"></span>
+                <span id="status-text">Connecting…</span>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="header-stat">
+                <span class="header-label">Uptime</span>
+                <span class="header-value" id="uptime">--:--:--</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- ─── Stats Cards ─── -->
+    <section class="stats-grid" id="stats-grid">
+        <div class="stat-card" id="card-packets">
+            <div class="stat-icon">📡</div>
+            <div class="stat-info">
+                <span class="stat-value" id="total-packets">0</span>
+                <span class="stat-label">Total Packets</span>
+            </div>
+        </div>
+        <div class="stat-card alert-card" id="card-alerts">
+            <div class="stat-icon">⚠️</div>
+            <div class="stat-info">
+                <span class="stat-value" id="total-alerts">0</span>
+                <span class="stat-label">Alerts</span>
+            </div>
+        </div>
+        <div class="stat-card" id="card-blocked">
+            <div class="stat-icon">🛡️</div>
+            <div class="stat-info">
+                <span class="stat-value" id="blocked-count">0</span>
+                <span class="stat-label">Blocked IPs</span>
+            </div>
+        </div>
+        <div class="stat-card" id="card-pps">
+            <div class="stat-icon">⚡</div>
+            <div class="stat-info">
+                <span class="stat-value" id="pps">0</span>
+                <span class="stat-label">Packets/sec</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ─── Main Grid ─── -->
+    <main class="main-grid">
+        <!-- Packet Rate Chart -->
+        <section class="card chart-card" id="chart-section">
+            <h2 class="card-title">Packet Rate</h2>
+            <div class="chart-wrapper">
+                <canvas id="packetChart"></canvas>
+            </div>
+        </section>
+
+        <!-- Attack Distribution Chart -->
+        <section class="card chart-card" id="distribution-section">
+            <h2 class="card-title">Attack Distribution</h2>
+            <div class="chart-wrapper donut-wrapper">
+                <canvas id="classChart"></canvas>
+            </div>
+        </section>
+
+        <!-- Live Alert Feed -->
+        <section class="card feed-card" id="feed-section">
+            <h2 class="card-title">
+                Live Alert Feed
+                <span class="feed-count" id="feed-count">0</span>
+            </h2>
+            <div class="alert-feed" id="alert-feed">
+                <div class="feed-empty">Waiting for alerts…</div>
+            </div>
+        </section>
+
+        <!-- Blocked IPs -->
+        <section class="card blocked-card" id="blocked-section">
+            <h2 class="card-title">Blocked IPs</h2>
+            <div class="blocked-list" id="blocked-list">
+                <div class="feed-empty">No blocked IPs</div>
+            </div>
+        </section>
+    </main>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
