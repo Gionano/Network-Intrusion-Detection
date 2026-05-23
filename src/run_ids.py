@@ -15,6 +15,16 @@ def main() -> int:
         default="configs/default.yaml",
         help="Path to configuration YAML",
     )
+    parser.add_argument(
+        "--pcap",
+        default="",
+        help="Path to a PCAP file for offline replay (skips live capture)",
+    )
+    parser.add_argument(
+        "--output-csv",
+        default="",
+        help="Write per-packet results to this CSV (only with --pcap)",
+    )
     args = parser.parse_args()
 
     config = load_config(args.config)
@@ -25,6 +35,18 @@ def main() -> int:
         )
         return 1
 
+    if args.pcap:
+        # Offline PCAP replay mode
+        from ids.model import IDSModel
+        from ids.replay import replay_pcap
+
+        model = IDSModel.load(config.model.path)
+        output_csv = args.output_csv or config.replay.output_csv
+        alerts = replay_pcap(args.pcap, model, config, output_csv=output_csv)
+        print(f"\nReplay finished: {len(alerts)} alert(s) detected.")
+        return 0
+
+    # Live capture mode
     run_realtime(config)
     return 0
 
