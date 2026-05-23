@@ -3,3 +3,10 @@ pandas
 pyyaml
 scapy
 tensorflow==2.15.0
+scikit-learn
+matplotlib
+fastapi
+uvicorn[standard]
+websockets
+pytest
+pytest-cov
